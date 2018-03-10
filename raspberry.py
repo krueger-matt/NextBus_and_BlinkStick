@@ -15,11 +15,8 @@ bstick = blinkstick.find_by_serial("BS016770-3.0")
 
 agency = 'sf-muni'
 
-# line1 = '45'
-# stopNum1 = '6757' #45 stop at Union & Gough
-
-line1 = '90'
-stopNum1 = '6814'
+line1 = '45'
+stopNum1 = '6757' #45 stop at Union & Gough
 
 line2 = '47'
 stopNum2 = '6814' #47 stop at Van Ness & Jackson
