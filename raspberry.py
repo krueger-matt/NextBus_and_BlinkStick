@@ -7,9 +7,6 @@ from blinkstick import blinkstick
 import time
 import datetime
 
-#line = raw_input("What line would you like to see predictions for? ")
-#stop = raw_input("What stop would you like to see a prediction for? ")
-
 # Find Blinkstick
 bstick = blinkstick.find_by_serial("BS016770-3.0")
 
@@ -40,7 +37,7 @@ def line45():
 	response1 = xml1.read()
 	root1 = ET.fromstring(response1)
 	for predictions in root1.iter('predictions'):
-    	station1 = predictions.get('stopTitle')
+		station1 = predictions.get('stopTitle')
 
 	vehicles = []
 	minutes = []
