@@ -24,28 +24,6 @@ stopNum2 = '6814' #47 stop at Van Ness & Jackson
 line3 = '49'
 stopNum3 = '6814' #49 stop at Van Ness & Jackson
 
-#Get real time predictions for a stop on a route
-
-xml1 = urlopen("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + agency + "&r=" + line1 + "&s=" + stopNum1)
-xml2 = urlopen("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + agency + "&r=" + line2 + "&s=" + stopNum2)
-xml3 = urlopen("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + agency + "&r=" + line3 + "&s=" + stopNum3)
-response1 = xml1.read()
-response2 = xml2.read()
-response3 = xml3.read()
-
-root1 = ET.fromstring(response1)
-root2 = ET.fromstring(response2)
-root3 = ET.fromstring(response3)
-
-for predictions in root1.iter('predictions'):
-    station1 = predictions.get('stopTitle')
-
-for predictions in root2.iter('predictions'):
-    station2 = predictions.get('stopTitle')
-
-for predictions in root3.iter('predictions'):
-    station3 = predictions.get('stopTitle')
-
 trains = ['E','F','J','KT','L','M','N']
 
 # Sleep timer variables
@@ -56,6 +34,13 @@ z3 = .3
 z4 = .1
 
 def line45():
+
+	#Get real time predictions for a stop on a route
+	xml1 = urlopen("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + agency + "&r=" + line1 + "&s=" + stopNum1)
+	response1 = xml1.read()
+	root1 = ET.fromstring(response1)
+	for predictions in root1.iter('predictions'):
+    	station1 = predictions.get('stopTitle')
 
 	vehicles = []
 	minutes = []
@@ -145,7 +130,23 @@ def line45():
 			time.sleep(z3)
 
 
+
 def line47_49():
+
+	xml2 = urlopen("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + agency + "&r=" + line2 + "&s=" + stopNum2)
+	xml3 = urlopen("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + agency + "&r=" + line3 + "&s=" + stopNum3)
+
+	response2 = xml2.read()
+	response3 = xml3.read()
+
+	root2 = ET.fromstring(response2)
+	root3 = ET.fromstring(response3)
+
+	for predictions in root2.iter('predictions'):
+	    station2 = predictions.get('stopTitle')
+
+	for predictions in root3.iter('predictions'):
+	    station3 = predictions.get('stopTitle')
 
 	vehicles = []
 	minutes = []
@@ -212,10 +213,15 @@ def line47_49():
 print datetime.datetime.now()
 
 # line47_49()
+# bstick.set_color(red=255,green=255,blue=255)
+# time.sleep(5)
+# print datetime.datetime.now()
+# line47_49()
 
 line45()
 bstick.set_color(red=255,green=255,blue=255)
 time.sleep(5)
+print datetime.datetime.now()
 line45()
 
 
