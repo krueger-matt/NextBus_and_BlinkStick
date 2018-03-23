@@ -25,10 +25,9 @@ trains = ['E','F','J','KT','L','M','N']
 
 # Sleep timer variables
 z = 25 #Steady
-z1 = 1 #Blink
-z2 = .65
-z3 = .3
-z4 = .1
+z1 = 1 #Slow blink
+z2 = .5 #Medium blink
+z3 = .1 #Fast blink
 
 def line45():
 
@@ -65,56 +64,63 @@ def line45():
 		light_value1 = ordered_dictionary.keys()[0]
 		light_value2 = ordered_dictionary.keys()[1]
 
-		if light_value1 <= 5:
+		if light_value1 < 5:
 			if light_value2 <= 20:
 				actual_light = light_value2
 			else:
 				actual_light = light_value1
-		elif light_value1 >= 6:
+		elif light_value1 >= 5:
 			actual_light = light_value1
 
 		print 'First: ' + str(light_value1)
 		print 'Second: ' + str(light_value2)
 		print 'Choose: ' + str(actual_light)
 
-		# Set to green if bus is over 15 minutes
-		if actual_light >= 15:
-			bstick.set_color(red=0,green=255,blue=0)
+		# If bus is 12 or more minuts set to red
+		if actual_light >= 12:
+			bstick.set_color(red=255,green=0,blue=0)
 			time.sleep(z)
-		# If light is between 10 and 15 minutes set to yellow
-		elif actual_light < 15 and actual_light >= 10:
-			bstick.set_color(red=255,green=255,blue=0)
-			time.sleep(z)
-		# If light is between 9 and 10 minutes slow blink red
-		elif actual_light < 10 and actual_light >= 9:
+		# If bus is 11 minutes slow blink red
+		elif actual_light < 12 and actual_light >= 11:
 			for x in range(0,(int(round((z/z1))))/2):
 				bstick.set_color(red=255,green=0,blue=0)
 				time.sleep(z1)
 				bstick.set_color(red=0,green=0,blue=0)
 				time.sleep(z1)
-		# If light is between 8 and 9 minutes medium blink red
+		# If bus is between 9 and 10 minutes set to yellow
+		elif actual_light < 11 and actual_light >= 9:
+			bstick.set_color(red=255,green=255,blue=0)
+			time.sleep(z)
+		# If bus is 8 minutes medium blink yellow
 		elif actual_light < 9 and actual_light >= 8:
-			for x in range(0,(int(round((z/z2))))/2):
-				bstick.set_color(red=255,green=0,blue=0)
+			for x in range(0,(int(round((z/z1))))/2):
+				bstick.set_color(red=255,green=255,blue=0)
 				time.sleep(z2)
 				bstick.set_color(red=0,green=0,blue=0)
 				time.sleep(z2)
-		# If light is between 7 and 8 minutes fast blink red
+		# If bus is between 7 and 8 minutes slow blink green
 		elif actual_light < 8 and actual_light >= 7:
-			for x in range(0,(int(round((z/z3))))/2):
-				bstick.set_color(red=255,green=0,blue=0)
-				time.sleep(z3)
+			for x in range(0,(int(round((z/z1))))/2):
+				bstick.set_color(red=0,green=255,blue=0)
+				time.sleep(z1)
 				bstick.set_color(red=0,green=0,blue=0)
-				time.sleep(z3)
-		# If light is between 6 and 7 minutes super fast blink red
+				time.sleep(z1)
+		# If bus is between 6 and 7 minutes medium blink green
 		elif actual_light < 7 and actual_light >= 6:
-			for x in range(0,(int(round((z/z4))))/2):
-				bstick.set_color(red=255,green=0,blue=0)
-				time.sleep(z4)
+			for x in range(0,(int(round((z/z2))))/2):
+				bstick.set_color(red=0,green=255,blue=0)
+				time.sleep(z2)
 				bstick.set_color(red=0,green=0,blue=0)
-				time.sleep(z4)
+				time.sleep(z2)
+		# If light is between 5 and 6 minutes fast blink green
+		elif actual_light < 6 and actual_light >= 5:
+			for x in range(0,(int(round((z/z3))))/2):
+				bstick.set_color(red=0,green=255,blue=0)
+				time.sleep(z3)
+				bstick.set_color(red=0,green=0,blue=0)
+				time.sleep(z3)
 		# If light is less than or equal to 5 solid red
-		elif actual_light <= 5:
+		elif actual_light < 5:
 			bstick.set_color(red=255,green=0,blue=0)
 			time.sleep(z)
 # Handle the condition where the API is down or no busses are coming (blink white)
